@@ -13,6 +13,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import java.io.*;
+import java.util.ArrayList;
 
 public class DecTreeViewer extends JFrame {
 
@@ -22,6 +23,8 @@ public class DecTreeViewer extends JFrame {
     private Font font;
     private JPanel sidePanel;
     private JTabbedPane mainPanel;
+    private static int treeID = 0;
+    private ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
 
 
     public static void main(String[] args) {
@@ -92,17 +95,29 @@ public class DecTreeViewer extends JFrame {
         pack();
     }
 
-    public class NewTreeBL implements ActionListener {
+    private class NewTreeBL implements ActionListener {
         public void actionPerformed(ActionEvent e) { 
             String treeName = JOptionPane.showInputDialog(DecTreeViewer.this,"Give The Decision Tree A Name: ");
             createTree(treeName);
         }
     }
 
-    private void createTree(String Name) {
+    private void setSideBar(DecisionTree tree) {
         sidePanel.removeAll();
-        JPanel panel1 = new JPanel();
-        mainPanel.addTab(Name + " *", panel1);
+
+        JButton b1 = new JButton("New Question");
+        b1.addActionListener(new NewQuestionBL(tree));
+
+        sidePanel.add()
+    }
+
+    private void createTree(String Name) {
+
+        JPanel panel = new JPanel();
+        mainPanel.addTab(Name + " *", panel);
+        DecisionTree tree = new DecisionTree(treeID, Name, panel);
+        trees.add(tree);
+        setSideBar(tree);
         repaint();
     }
 

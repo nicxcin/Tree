@@ -17,8 +17,8 @@ import java.io.*;
 public class DecTreeViewer extends JFrame {
 
     private Thread gameThread;
-    private final int H = 500;
-    private final int W = 600;
+    private final int H = 600;
+    private final int W = 1000;
     private Font font;
 
 
@@ -31,6 +31,18 @@ public class DecTreeViewer extends JFrame {
         });
     }
 
+    private JMenuBar createMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        
+        JMenu fileMenu = new JMenu("File");
+        JMenu helpMenu = new JMenu("Help");
+
+        menuBar.add(fileMenu);
+        menuBar.add(helpMenu);
+
+        return menuBar;
+    }
+
     public DecTreeViewer() {
         setPreferredSize(new Dimension(W,H));
         setTitle("Decision Tree");
@@ -40,9 +52,11 @@ public class DecTreeViewer extends JFrame {
 
         createKeyInput();
         try { font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/RobotoSlab-Regular.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
-        
-        //menuCanvas = new MenuCanvas(W, H, font, squareSize);
-        //setActivePanel(menuCanvas);
+
+        setJMenuBar(createMenu());
+
+
+        JPanel sidePanel = new JPanel();
         
         setVisible(true);
         pack();

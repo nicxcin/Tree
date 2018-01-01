@@ -20,6 +20,8 @@ public class DecTreeViewer extends JFrame {
     private int H = 600;
     private int W = 1000;
     private Font font;
+    private JPanel sidePanel;
+    private JTabbedPane mainPanel;
 
 
     public static void main(String[] args) {
@@ -39,6 +41,16 @@ public class DecTreeViewer extends JFrame {
 
         menuBar.add(fileMenu);
         menuBar.add(helpMenu);
+
+        JMenuItem newTreeItem = new JMenuItem("New Tree");
+        JMenuItem opnTreeItem = new JMenuItem("Open Tree");
+        JMenuItem savTreeItem = new JMenuItem("Save Tree");
+
+        newTreeItem.addActionListener(new NewTreeBL());
+
+        fileMenu.add(newTreeItem);
+        fileMenu.add(opnTreeItem);
+        fileMenu.add(savTreeItem);
 
         return menuBar;
     }
@@ -61,16 +73,37 @@ public class DecTreeViewer extends JFrame {
         setJMenuBar(createMenu());
 
 
-        JPanel sidePanel = new JPanel();
-        JPanel mainPanel = new JPanel();
+        sidePanel = new JPanel();
+        mainPanel = new JTabbedPane();
 
-        sidePanel.setBackground(Color.YELLOW);
+        sidePanel.setBackground(Color.WHITE);
         sidePanel.setPreferredSize(new Dimension(200,H));
+
+        mainPanel.setBackground(Color.GRAY);
+
+        JButton b1 = new JButton("New Tree");
+        b1.addActionListener(new NewTreeBL());
+
+        sidePanel.add(b1);
         
         add(sidePanel, BorderLayout.LINE_START);
         add(mainPanel, BorderLayout.CENTER);
         setVisible(true);
         pack();
+    }
+
+    public class NewTreeBL implements ActionListener {
+        public void actionPerformed(ActionEvent e) { 
+            String treeName = JOptionPane.showInputDialog(DecTreeViewer.this,"Give The Decision Tree A Name: ");
+            createTree(treeName);
+        }
+    }
+
+    private void createTree(String Name) {
+        sidePanel.removeAll();
+        JPanel panel1 = new JPanel();
+        mainPanel.addTab(Name + " *", panel1);
+        repaint();
     }
 
     public void createKeyInput() {

@@ -39,6 +39,7 @@ public class DecTreeViewer extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         createKeyInput();
+        try { font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/RobotoSlab-Regular.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
         
         //menuCanvas = new MenuCanvas(W, H, font, squareSize);
         //setActivePanel(menuCanvas);

@@ -17,8 +17,8 @@ import java.io.*;
 public class DecTreeViewer extends JFrame {
 
     private Thread gameThread;
-    private final int H = 600;
-    private final int W = 1000;
+    private int H = 600;
+    private int W = 1000;
     private Font font;
 
 
@@ -44,6 +44,11 @@ public class DecTreeViewer extends JFrame {
     }
 
     public DecTreeViewer() {
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        W = (int)screenSize.getWidth();
+        H = (int)screenSize.getHeight();
+
         setPreferredSize(new Dimension(W,H));
         setTitle("Decision Tree");
         //setMinimumSize(new Dimension(W,H));
@@ -57,7 +62,13 @@ public class DecTreeViewer extends JFrame {
 
 
         JPanel sidePanel = new JPanel();
+        JPanel mainPanel = new JPanel();
+
+        sidePanel.setBackground(Color.YELLOW);
+        sidePanel.setPreferredSize(new Dimension(200,H));
         
+        add(sidePanel, BorderLayout.LINE_START);
+        add(mainPanel, BorderLayout.CENTER);
         setVisible(true);
         pack();
     }

@@ -25,6 +25,7 @@ public class DecTreeViewer extends JFrame {
     private JTabbedPane mainPanel;
     private static int treeID = 0;
     private ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
+    private DecisionTree activeTree;
 
 
     public static void main(String[] args) {
@@ -86,13 +87,20 @@ public class DecTreeViewer extends JFrame {
 
         JButton b1 = new JButton("New Tree");
         b1.addActionListener(new NewTreeBL());
+        JButton b2 = new JButton("New Question");
+        b2.addActionListener(new NewQuestionBL());
 
         sidePanel.add(b1);
+        sidePanel.add(b2);
         
         add(sidePanel, BorderLayout.LINE_START);
         add(mainPanel, BorderLayout.CENTER);
         setVisible(true);
         pack();
+    }
+
+    private DecisionTree getSelectedTree() {
+        return (DecisionTree)mainPanel.getSelectedComponent();
     }
 
     private class NewTreeBL implements ActionListener {
@@ -102,22 +110,26 @@ public class DecTreeViewer extends JFrame {
         }
     }
 
-    private void setSideBar(DecisionTree tree) {
-        sidePanel.removeAll();
-
-        JButton b1 = new JButton("New Question");
-        b1.addActionListener(new NewQuestionBL(tree));
-
-        sidePanel.add()
+    private class NewQuestionBL implements ActionListener {
+        public void actionPerformed(ActionEvent e) { 
+            String questionTitle = JOptionPane.showInputDialog(DecTreeViewer.this,"Give The Question A Title: ");
+            getSelectedTree().addQuestion(questionTitle);
+        }
     }
 
-    private void createTree(String Name) {
+    // private void setSideBar(DecisionTree tree) {
+    //     sidePanel.removeAll();
 
-        JPanel panel = new JPanel();
-        mainPanel.addTab(Name + " *", panel);
-        DecisionTree tree = new DecisionTree(treeID, Name, panel);
+    //     JButton b1 = new JButton("New Question");
+    //     b1.addActionListener(new NewQuestionBL(tree));
+
+    //     sidePanel.add(b1);
+    // }
+
+    private void createTree(String Name) {
+        DecisionTree tree = new DecisionTree(treeID, Name);
+        mainPanel.addTab(Name + " *", tree);
         trees.add(tree);
-        setSideBar(tree);
         repaint();
     }
 

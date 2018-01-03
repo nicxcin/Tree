@@ -16,7 +16,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class DecTreeViewer extends JFrame {
-
     private Thread gameThread;
     private int H = 600;
     private int W = 1000;
@@ -95,6 +94,7 @@ public class DecTreeViewer extends JFrame {
         
         add(sidePanel, BorderLayout.LINE_START);
         add(mainPanel, BorderLayout.CENTER);
+
         setVisible(true);
         pack();
     }
@@ -130,7 +130,6 @@ public class DecTreeViewer extends JFrame {
         DecisionTree tree = new DecisionTree(treeID, Name);
         mainPanel.addTab(Name + " *", tree);
         trees.add(tree);
-        repaint();
     }
 
     public void createKeyInput() {

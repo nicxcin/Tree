@@ -28,7 +28,8 @@ public class DecisionTree extends JPanel {
 		this.parent = parent;
 
 		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        setBackground(BACKGROUND);
+        setBackground(Color.BLUE);
+        setVisible(true);
 	}
 
 	public void setName(String Name) {
@@ -45,7 +46,7 @@ public class DecisionTree extends JPanel {
 		q.setTitle(title);
 		questionID++;
 		questionList.add(q);
-		this.add(q);
+		add(q);
 	}
 
 	public void removeQuestion(int id) {

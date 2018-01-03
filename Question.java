@@ -4,7 +4,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 
-public class Question extends JPanel {
+public class Question extends DraggableComponent {
 	public static void main(String[] args) {}
 	private static int optionID;
 
@@ -28,11 +28,9 @@ public class Question extends JPanel {
 
 		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
     	setBackground(Color.WHITE);
-    	setPrefferedSize();
-    	//setBounds(x,y,w,h);
-
-
-
+    	setPreferredSize(new Dimension(w,h));
+    	setLocation(x,y);
+    	setVisible(true);
 	}
 
 	public void setTitle(String title) {

@@ -13,21 +13,29 @@ public class DraggableComponent extends JPanel {
 
 	private BufferedImage image;
 	private Font font;
-	private int x = 0;
-	private int y = 0;
+	private Point pos = new Point(0,0);
 	private Color BACKGROUND = new Color(39,40,34);
 
 	private Boolean dragging = false;
+	protected Point anchorPoint;
 
 	public DraggableComponent() {
 		addMouseMotionListener(new MouseAdapter() {
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				//System.out.println("Mouse Moved");
+				anchorPoint = e.getPoint();
 			}
+
+
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				setLocation(e.getPoint());
+				int anchorX = anchorPoint.x;
+                int anchorY = anchorPoint.y;
+
+                Point parentOnScreen = getParent().getLocationOnScreen();
+                Point mouseOnScreen = e.getLocationOnScreen();
+                pos = new Point(mouseOnScreen.x - parentOnScreen.x - anchorX, mouseOnScreen.y - parentOnScreen.y - anchorY);
+                setLocation(pos);
 			}
 		});
 	}

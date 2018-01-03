@@ -97,6 +97,9 @@ public class DecTreeViewer extends JFrame {
 
         setVisible(true);
         pack();
+
+        createTree("Test");
+        getSelectedTree().addQuestion("A");
     }
 
     private DecisionTree getSelectedTree() {
@@ -117,17 +120,8 @@ public class DecTreeViewer extends JFrame {
         }
     }
 
-    // private void setSideBar(DecisionTree tree) {
-    //     sidePanel.removeAll();
-
-    //     JButton b1 = new JButton("New Question");
-    //     b1.addActionListener(new NewQuestionBL(tree));
-
-    //     sidePanel.add(b1);
-    // }
-
     private void createTree(String Name) {
-        DecisionTree tree = new DecisionTree(treeID, Name);
+        DecisionTree tree = new DecisionTree(treeID, Name, mainPanel.getSize());
         mainPanel.addTab(Name + " *", tree);
         trees.add(tree);
     }

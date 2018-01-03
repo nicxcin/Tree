@@ -17,8 +17,7 @@ public class Question extends DraggableComponent {
 	private Font font;
 	private int h = 100;
 	private int w = 200;
-	private int x = 0;
-	private int y = 0;
+	private Point pos = new Point(0,0);	
 	protected Color BACKGROUND = new Color(39,40,34);
 
 	public Question(DecisionTree parent, int id) {
@@ -28,8 +27,7 @@ public class Question extends DraggableComponent {
 
 		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
     	setBackground(Color.WHITE);
-    	setPreferredSize(new Dimension(w,h));
-    	setLocation(x,y);
+    	setBounds(pos.x, pos.y, w, h);
     	setVisible(true);
 	}
 

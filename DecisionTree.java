@@ -15,20 +15,21 @@ public class DecisionTree extends JPanel {
 
 	private BufferedImage image;
 	private Font font;
-	private int x = 0;
-	private int y = 0;
-	private int w = 100;
-	private int h = 100;
+	private Dimension size = new Dimension(100,100);
 	private Question parent;
 	protected Color BACKGROUND = new Color(39,40,34);
 
-	public DecisionTree(int id, String name) {
+	public DecisionTree(int id, String name, Dimension parentSize) {
 		this.id = id;
 		this.name = name;
-		this.parent = parent;
+		//this.parent = parent;
+		this.size = parentSize;
 
-		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		setLayout(null);
+
+		image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
         setBackground(Color.BLUE);
+        //setOpaque(true);
         setVisible(true);
 	}
 

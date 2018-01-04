@@ -7,14 +7,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
 
-public class DraggableComponent extends JPanel {
+public class DraggableComponent extends BasicPanel {
 	public static void main(String[] args) {}
 	private static int optionID;
 
 	private BufferedImage image;
-	private Font font;
 	private Point pos = new Point(0,0);
-	private Color BACKGROUND = new Color(39,40,34);
 
 	private Boolean dragging = false;
 	protected Point anchorPoint;

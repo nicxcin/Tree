@@ -19,16 +19,17 @@ public class DecisionTree extends JPanel {
 	private Question parent;
 	protected Color BACKGROUND = new Color(39,40,34);
 
-	public DecisionTree(int id, String name, Dimension parentSize) {
+	public DecisionTree(int id, String name, Dimension parentSize, Font font) {
 		this.id = id;
 		this.name = name;
-		//this.parent = parent;
+		this.font = font;
 		this.size = parentSize;
 
+		setFont(font);
 		setLayout(null);
 
 		image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
-        setBackground(Color.BLUE);
+        setBackground(new Color(243,245,246));
         //setOpaque(true);
         setVisible(true);
 	}
@@ -43,10 +44,10 @@ public class DecisionTree extends JPanel {
 	}
 
 	public void addQuestion(String title) {
-		Question q = new Question(this, questionID);
-		q.setTitle(title);
+		Question q = new Question(this, questionID, title, font);
 		questionID++;
 		questionList.add(q);
+		q.setTitle(title);
 		add(q);
 	}
 

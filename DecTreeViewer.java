@@ -36,6 +36,7 @@ public class DecTreeViewer extends JFrame {
         });
     }
 
+
     private JMenuBar createMenu() {
         JMenuBar menuBar = new JMenuBar();
         
@@ -79,15 +80,20 @@ public class DecTreeViewer extends JFrame {
         sidePanel = new JPanel();
         mainPanel = new JTabbedPane();
 
+        sidePanel.setFont(font);
         sidePanel.setBackground(Color.WHITE);
         sidePanel.setPreferredSize(new Dimension(200,H));
 
+        mainPanel.setFont(font);
         mainPanel.setBackground(Color.GRAY);
 
         JButton b1 = new JButton("New Tree");
         b1.addActionListener(new NewTreeBL());
         JButton b2 = new JButton("New Question");
         b2.addActionListener(new NewQuestionBL());
+
+        b1.setFont(font);
+        b2.setFont(font);
 
         sidePanel.add(b1);
         sidePanel.add(b2);
@@ -98,8 +104,8 @@ public class DecTreeViewer extends JFrame {
         setVisible(true);
         pack();
 
-        createTree("Test");
-        getSelectedTree().addQuestion("A");
+        createTree("Homepage 1");
+        getSelectedTree().addQuestion("What would you like to do?");
     }
 
     private DecisionTree getSelectedTree() {
@@ -121,7 +127,7 @@ public class DecTreeViewer extends JFrame {
     }
 
     private void createTree(String Name) {
-        DecisionTree tree = new DecisionTree(treeID, Name, mainPanel.getSize());
+        DecisionTree tree = new DecisionTree(treeID, Name, mainPanel.getSize(), font);
         mainPanel.addTab(Name + " *", tree);
         trees.add(tree);
     }

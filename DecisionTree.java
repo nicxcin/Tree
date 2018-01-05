@@ -49,10 +49,13 @@ public class DecisionTree extends JPanel {
 		questionList.add(q);
 		q.setTitle(title);
 		add(q);
+		repaint();
 	}
 
-	public void removeQuestion(int id) {
-		questionList.remove(id);
+	public void removeQuestion(Question q) {
+		remove(q);
+		questionList.remove(q);
+		repaint();
 	}
 
 	@Override

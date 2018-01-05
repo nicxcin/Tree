@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
 
-public class DraggableComponent extends BasicPanel {
+public class DraggableComponent extends JPanel {
 	public static void main(String[] args) {}
 	private static int optionID;
 

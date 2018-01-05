@@ -9,6 +9,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Question extends DraggableComponent {
 	public static void main(String[] args) {
@@ -28,7 +33,7 @@ public class Question extends DraggableComponent {
 
 	private BufferedImage image;
 	private Font font;
-	private int h = 40;
+	private int h = 60;
 	private int w = 250;
 	private Point pos = new Point(0,0);	
 	private Color BACKGROUND = new Color(39,40,34);
@@ -38,39 +43,67 @@ public class Question extends DraggableComponent {
 	private JLabel titleLabel;
 	private JTextField titleEdit;
 	private CardLayout cl;
+	private BasicPanel titleCard;
+	private int topBarHeight = 30;
 
 	public Question(DecisionTree parent, int id, Font font) {
 		new Question(parent, id, "", font);
 	}
 
+	private class xQuestionBL implements ActionListener {
+        public void actionPerformed(ActionEvent e) { 
+	        remove();
+        }
+    }
+
 	public Question(DecisionTree parent, int id, String title, Font font) {
 		this.id = id;
 		this.parent = parent;
 		this.font = font;
+		setLayout(new BorderLayout());
 		setFont(font);
 		image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
 		setBorder(BorderFactory.createLineBorder(Color.black));
 		setBackground(GREEN);
 
-		setLayout(new CardLayout());
-		cl = (CardLayout)(getLayout());
+		JPanel topBar = new JPanel(new BorderLayout());
+		topBar.setBounds(0, 0, w, topBarHeight);
+		topBar.setPreferredSize(new Dimension(w, topBarHeight));
+		topBar.setBackground(GREEN);
+		topBar.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		titleLabel = new JLabel(questionTitle);
-		titleLabel.setForeground(Color.WHITE);
+		JButton xBtn = new JButton("x");
+		xBtn.setPreferredSize(new Dimension(30,30));
+		xBtn.addActionListener(new xQuestionBL());
+		topBar.add(xBtn, BorderLayout.EAST);
+		
+
+		titleCard = new BasicPanel();
+		titleCard.setLayout(new CardLayout());
+		cl = (CardLayout)(titleCard.getLayout());
+
+
+		add(topBar, BorderLayout.NORTH);
+		add(titleCard, BorderLayout.CENTER);
+		//setLayout(new CardLayout());
+		//cl = (CardLayout)(getLayout());
+
+		titleLabel = new JLabel(questionTitle, SwingConstants.CENTER);
+		//titleLabel.setForeground(Color.WHITE);
 		titleLabel.setFont(font);
 
 		titleLabel.addMouseListener(new MouseAdapter() {
     		@Override
     		public void mouseClicked(MouseEvent e) {
         		if(e.getClickCount()==2){
-            		editOption();
+            		editQuestion();
         		}
     		}
 		});
 
 
-		add(titleLabel);
+		titleCard.add(titleLabel);
 
 
 		titleEdit = new JTextField();
@@ -79,23 +112,28 @@ public class Question extends DraggableComponent {
 		titleEdit.addKeyListener( new KeyAdapter() {    //Key listener
             public void keyPressed(KeyEvent e) {
                 int k = e.getKeyCode();
-                //System.out.println("" + k);
-
                 if(k==10) {
-                	titleLabel.setText(titleEdit.getText());
-                	editOption();
+                	viewQuestion();
                 }
             }
         });
 		
-		add(titleEdit);
+		titleCard.add(titleEdit);
 
+		titleCard.setBounds(0,topBarHeight,w,h-topBarHeight);
+		titleCard.setVisible(true);
     	setBounds(pos.x, pos.y, w, h);
     	setVisible(true);
 	}
 
-	private void editOption() {
-		cl.next(this);
+	private void editQuestion() {
+		cl.next(titleCard);
+	}
+
+	private void viewQuestion() {
+		questionTitle = titleEdit.getText();
+		titleLabel.setText(questionTitle);
+		cl.next(titleCard);
 	}
 
 	public void setTitle(String title) {
@@ -111,8 +149,8 @@ public class Question extends DraggableComponent {
 	}
 
 	public void remove() {
-		parent.removeQuestion(id);
 		optionList = null;
+		parent.removeQuestion(this);
 	}
 
 	public void removeOption(int id) {

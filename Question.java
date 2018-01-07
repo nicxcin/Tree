@@ -33,7 +33,7 @@ public class Question extends DraggableComponent {
 
 	private BufferedImage image;
 	private Font font;
-	private int h = 60;
+	private int h = 100;
 	private int w = 250;
 	private Point pos = new Point(0,0);	
 	private Color BACKGROUND = new Color(39,40,34);
@@ -44,7 +44,7 @@ public class Question extends DraggableComponent {
 	private JTextField titleEdit;
 	private CardLayout cl;
 	private BasicPanel titleCard;
-	private int topBarHeight = 30;
+	private int topBarHeight = 20;
 
 	public Question(DecisionTree parent, int id, Font font) {
 		new Question(parent, id, "", font);
@@ -68,14 +68,34 @@ public class Question extends DraggableComponent {
 		setBackground(GREEN);
 
 		JPanel topBar = new JPanel(new BorderLayout());
-		topBar.setBounds(0, 0, w, topBarHeight);
 		topBar.setPreferredSize(new Dimension(w, topBarHeight));
 		topBar.setBackground(GREEN);
-		topBar.setBorder(BorderFactory.createLineBorder(Color.black));
+		//topBar.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		JButton xBtn = new JButton("x");
-		xBtn.setPreferredSize(new Dimension(30,30));
+		JPanel bottomBar = new JPanel();
+		bottomBar.setPreferredSize(new Dimension(w, 30));
+		bottomBar.setBackground(GREEN);
+
+
+		JLabel info = new JLabel("Question:");
+		topBar.add(info, BorderLayout.WEST);
+
+		JButton xBtn = new JButton(new XIcon(0));
+		xBtn.setBackground(Color.BLACK);
+		xBtn.setBorderPainted(false);
+		xBtn.setPreferredSize(new Dimension(40,20));
 		xBtn.addActionListener(new xQuestionBL());
+		xBtn.addMouseListener(new MouseListener() {
+			public void mouseEntered(MouseEvent e) {}
+            public void mouseExited(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            	xBtn.setIcon(new XIcon(0));
+            }
+            public void mouseClicked(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            	xBtn.setIcon(new XIcon(1));
+            }
+        });
 		topBar.add(xBtn, BorderLayout.EAST);
 		
 
@@ -86,6 +106,7 @@ public class Question extends DraggableComponent {
 
 		add(topBar, BorderLayout.NORTH);
 		add(titleCard, BorderLayout.CENTER);
+		add(bottomBar, BorderLayout.SOUTH);
 		//setLayout(new CardLayout());
 		//cl = (CardLayout)(getLayout());
 

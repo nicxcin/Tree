@@ -1,16 +1,12 @@
+package src;
+
 import javax.swing.*;
 import java.awt.*;
-
 
 public class XIcon implements Icon {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override 
-            public void run() {
-                new DecTreeViewer();
-            }
-        });
+        SwingUtilities.invokeLater(DecTreeViewer::new);
     }
 
     private int width = 40;

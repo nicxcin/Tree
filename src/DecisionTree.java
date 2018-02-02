@@ -1,14 +1,15 @@
+package src;
+
 import javax.swing.*;
-import java.util.ArrayList;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class DecisionTree extends JPanel {
 	public static void main(String[] args) {}
 	private static int questionID = 0;
 
-	private ArrayList<Question> questionList = new ArrayList<Question>(); 
+	private ArrayList<Question> questionList = new ArrayList<Question>();
 	private int id;
 	private String name;
 	private JPanel gparent;

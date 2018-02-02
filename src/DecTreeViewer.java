@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -28,12 +30,7 @@ public class DecTreeViewer extends JFrame {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override 
-            public void run() {
-                new DecTreeViewer();
-            }
-        });
+        SwingUtilities.invokeLater(DecTreeViewer::new);
     }
 
 
@@ -69,7 +66,7 @@ public class DecTreeViewer extends JFrame {
         setTitle("Decision Tree");
         //setMinimumSize(new Dimension(W,H));
         setResizable(false);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         createKeyInput();
         try { font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/RobotoSlab-Regular.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}

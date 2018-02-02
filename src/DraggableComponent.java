@@ -1,10 +1,9 @@
-import java.util.ArrayList;
+package src;
+
 import javax.swing.*;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseAdapter;
 
 public class DraggableComponent extends JPanel {
@@ -15,7 +14,7 @@ public class DraggableComponent extends JPanel {
 	private Point pos = new Point(0,0);
 
 	private Boolean dragging = false;
-	protected Point anchorPoint;
+	private Point anchorPoint;
 
 	public DraggableComponent() {
 		addMouseMotionListener(new MouseAdapter() {

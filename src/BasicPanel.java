@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.*;
@@ -23,7 +25,7 @@ public class BasicPanel extends JPanel {
         });
 	}
 
-	private static Collection<BasicPanel> elements = new ArrayList<BasicPanel>();
+	private static Collection<BasicPanel> elements = new ArrayList<>();
 
 	protected Font font;	
 

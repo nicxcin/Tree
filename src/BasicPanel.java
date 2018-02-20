@@ -17,12 +17,7 @@ import java.awt.event.FocusListener;
 
 public class BasicPanel extends JPanel {
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-            @Override 
-            public void run() {
-                new DecTreeViewer();
-            }
-        });
+		SwingUtilities.invokeLater(DecTreeViewer::new);
 	}
 
 	private static Collection<BasicPanel> elements = new ArrayList<>();

@@ -4,28 +4,24 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.border.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
 import java.io.*;
 import java.util.ArrayList;
 
 public class DecTreeViewer extends JFrame {
-    private Thread gameThread;
-    private int H = 600;
-    private int W = 1000;
+    private int H;
+    private int W;
     private Font font;
+    private TipPanel tipPanel;
     private JPanel sidePanel;
     private JTabbedPane mainPanel;
     private static int treeID = 0;
-    private ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
+    private ArrayList<DecisionTree> trees = new ArrayList<>();
     private DecisionTree activeTree;
 
 
@@ -57,32 +53,45 @@ public class DecTreeViewer extends JFrame {
     }
 
     public DecTreeViewer() {
-
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         W = (int)screenSize.getWidth();
         H = (int)screenSize.getHeight();
 
         setPreferredSize(new Dimension(W,H));
         setTitle("Decision Tree");
-        //setMinimumSize(new Dimension(W,H));
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         createKeyInput();
-        try { font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/RobotoSlab-Regular.ttf")).deriveFont(16f); } catch (IOException e) {e.printStackTrace();} catch(FontFormatException e) {e.printStackTrace();}
-
+        getFont();
+        try { font = Font.createFont(Font.TRUETYPE_FONT, new File("Fonts/RobotoSlab-Regular.ttf")).deriveFont(16f); } catch (IOException | FontFormatException e) {e.printStackTrace();}
         setJMenuBar(createMenu());
+        createSidePanel();
+        createMainPanel();
+        setVisible(true);
+        pack();
 
+        //Testing
+        createTree("Homepage 1");
+        getSelectedTree().addQuestion("What would you like to do?");
+        getSelectedTree().addQuestion("");
+    }
 
-        sidePanel = new JPanel();
+    private void createMainPanel() {
         mainPanel = new JTabbedPane();
+        mainPanel.setFont(font);
+        mainPanel.setBackground(Color.GRAY);
+        add(mainPanel, BorderLayout.CENTER);
+    }
 
+    private void createSidePanel() {
+        sidePanel = new JPanel(new BorderLayout());
         sidePanel.setFont(font);
         sidePanel.setBackground(Color.WHITE);
         sidePanel.setPreferredSize(new Dimension(200,H));
 
-        mainPanel.setFont(font);
-        mainPanel.setBackground(Color.GRAY);
+        tipPanel = new TipPanel();
+        tipPanel.setPreferredSize(new Dimension(200,200));
 
         JButton b1 = new JButton("New Tree");
         b1.addActionListener(new NewTreeBL());
@@ -92,45 +101,48 @@ public class DecTreeViewer extends JFrame {
         b1.setFont(font);
         b2.setFont(font);
 
-        sidePanel.add(b1);
-        sidePanel.add(b2);
-        
+        JPanel buttonBox = new JPanel(new BorderLayout());
+
+        buttonBox.add(b1, BorderLayout.NORTH);
+        buttonBox.add(b2, BorderLayout.SOUTH);
+
+        sidePanel.add(buttonBox, BorderLayout.NORTH);
+        sidePanel.add(tipPanel, BorderLayout.SOUTH);
+
         add(sidePanel, BorderLayout.LINE_START);
-        add(mainPanel, BorderLayout.CENTER);
-
-        setVisible(true);
-        pack();
-
-        createTree("Homepage 1");
-        getSelectedTree().addQuestion("What would you like to do?");
     }
 
     private DecisionTree getSelectedTree() {
         return (DecisionTree)mainPanel.getSelectedComponent();
     }
 
+    //Button Listener for creating new Trees
     private class NewTreeBL implements ActionListener {
         public void actionPerformed(ActionEvent e) { 
             String treeName = JOptionPane.showInputDialog(DecTreeViewer.this,"Give The Decision Tree A Name: ");
-            createTree(treeName);
+            if(treeName!=null && !treeName.equals(""))
+                createTree(treeName);
         }
     }
 
+    //Button Listener for creating new Questions
     private class NewQuestionBL implements ActionListener {
         public void actionPerformed(ActionEvent e) { 
             String questionTitle = JOptionPane.showInputDialog(DecTreeViewer.this,"Give The Question A Title: ");
-            getSelectedTree().addQuestion(questionTitle);
+            if(questionTitle!=null && !questionTitle.equals(""))
+                getSelectedTree().addQuestion(questionTitle);
         }
     }
 
     private void createTree(String Name) {
+        //Each Tab is a Different Decision
         DecisionTree tree = new DecisionTree(treeID, Name, mainPanel.getSize(), font);
         mainPanel.addTab(Name + " *", tree);
         trees.add(tree);
     }
 
-    public void createKeyInput() {
-        this.addKeyListener( new KeyAdapter() {    //Key listener
+    private void createKeyInput() {
+        this.addKeyListener( new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
                 int k = e.getKeyCode();
                 //System.out.println("" + k);   

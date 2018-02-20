@@ -9,7 +9,7 @@ public class DecisionTree extends JPanel {
 	public static void main(String[] args) {}
 	private static int questionID = 0;
 
-	private ArrayList<Question> questionList = new ArrayList<Question>();
+	private ArrayList<Question> questionList = new ArrayList<>();
 	private int id;
 	private String name;
 	private JPanel gparent;
@@ -20,7 +20,7 @@ public class DecisionTree extends JPanel {
 	private Question parent;
 	protected Color BACKGROUND = new Color(39,40,34);
 
-	public DecisionTree(int id, String name, Dimension parentSize, Font font) {
+	DecisionTree(int id, String name, Dimension parentSize, Font font) {
 		this.id = id;
 		this.name = name;
 		this.font = font;
@@ -45,7 +45,7 @@ public class DecisionTree extends JPanel {
 	}
 
 	public void addQuestion(String title) {
-		Question q = new Question(this, questionID, title, font);
+		Question q = new Question(this, questionID, font);
 		questionID++;
 		questionList.add(q);
 		q.setTitle(title);
